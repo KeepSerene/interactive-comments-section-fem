@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap");
+
+:root {
+  /* Fonts */
+  --ff: "Sofia Sans", sans-serif;
+  --fw-regular: 400;
+  --fw-semi-bold: 500;
+  --fw-bold: 700;
+
+  /* HSL values */
+  /* Primary colors */
+  --moderate-blue: 238 40% 52%;
+  --soft-red: 358 79% 66%;
+  --light-grayish-blue: 239 57% 85%;
+  --pale-red: 357 100% 86%;
+
+  /* Neutral colors */
+  --dark-blue: 212 24% 26%;
+  --grayish-blue: 211 10% 45%;
+  --light-gray: 223 19% 93%;
+  --very-light-gray: 228 33% 97%;
+  --white: 0 0% 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+img,
+picture,
+figure,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+p,
+li,
+figcaption,
+address {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+body {
+  background-color: hsl(var(--light-gray));
+  color: hsl(var(--grayish-blue));
+  font-family: var(--ff);
+  font-weight: var(--fw-regular);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: hsla(var(--light-grayish-blue));
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--moderate-blue));
+  border-radius: 6px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: hsl(var(--moderate-blue));
+  color: hsl(var(--white));
+}

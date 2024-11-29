@@ -1,0 +1,184 @@
+.card-container {
+  display: grid;
+  gap: 1rem;
+}
+
+.comment-card {
+  background-color: hsl(var(--white));
+  border-radius: 0.5rem;
+  padding: 1.2rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comment-card button {
+  background-color: transparent;
+  border: none;
+}
+
+.score-controller {
+  background-color: hsl(var(--very-light-gray));
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+.score-controller button {
+  width: 1rem;
+}
+
+.score-controller .icon {
+  fill: hsl(var(--light-grayish-blue));
+
+  transition: fill 250ms ease-in-out;
+}
+
+.score-controller button:where(:hover, :focus-visible) .icon {
+  fill: hsl(var(--moderate-blue));
+}
+
+.score-controller .score {
+  width: 1rem;
+  color: hsl(var(--moderate-blue));
+  font-weight: var(--fw-bold);
+}
+
+.card-header {
+  margin-bottom: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.username {
+  color: hsl(var(--dark-blue));
+}
+
+.you-tag {
+  background-color: hsl(var(--moderate-blue));
+  color: hsl(var(--white));
+  font-weight: var(--fw-bold);
+  border-radius: 0.2rem;
+  padding: 0.1rem 0.3rem;
+  user-select: none;
+}
+
+.current-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn {
+  color: hsl(var(--moderate-blue));
+  font-weight: var(--fw-bold);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  transition: color 250ms ease-in-out;
+}
+
+.reply-icon,
+.edit-icon {
+  fill: hsl(var(--moderate-blue));
+
+  transition: fill 250ms ease-in-out;
+}
+
+.btn:where(:hover, :focus-visible) {
+  color: hsl(var(--light-grayish-blue));
+}
+
+.btn:where(:hover, :focus-visible) :where(.reply-icon, .edit-icon) {
+  fill: hsl(var(--light-grayish-blue));
+}
+
+.delete-btn.btn {
+  color: hsl(var(--soft-red));
+}
+
+.delete-icon {
+  fill: hsl(var(--soft-red));
+
+  transition: fill 250ms ease-in-out;
+}
+
+.delete-btn.btn:where(:hover, :focus-visible) {
+  color: hsl(var(--pale-red));
+}
+
+.delete-btn.btn:where(:hover, :focus-visible) .delete-icon {
+  fill: hsl(var(--pale-red));
+}
+
+.card-footer {
+  display: none;
+}
+
+.replies {
+  display: grid;
+  gap: 1rem;
+
+  position: relative;
+}
+
+.replies::before {
+  content: "";
+  width: 2px;
+  height: 100%;
+  background-color: hsla(var(--grayish-blue) / 0.1);
+
+  position: absolute;
+  left: 2rem;
+  top: 0;
+}
+
+.replies .comment-card {
+  margin-left: 4rem;
+}
+
+/* Responsiveness */
+/* Small screens < 768px */
+@media screen and (width < 48em) {
+  .large-scr-elem {
+    display: none;
+  }
+
+  .comment-card {
+    flex-direction: column;
+  }
+
+  .card-footer {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .card-footer .score-controller {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .replies::before {
+    left: 1rem;
+  }
+
+  .replies .comment-card {
+    margin-left: 2rem;
+  }
+}

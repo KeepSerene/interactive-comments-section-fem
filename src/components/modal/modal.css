@@ -1,0 +1,72 @@
+.modal-overlay {
+  background-color: hsl(var(--grayish-blue) / 0.6);
+
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: calc(100% - 2rem);
+  background-color: hsl(var(--white));
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  display: grid;
+  gap: 1rem;
+}
+
+.modal h3 {
+  color: hsl(var(--dark-blue));
+  font-size: 1.25rem;
+}
+
+.modal p {
+  color: hsl(var(--grayish-blue));
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-btn {
+  color: hsl(var(--white));
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1rem;
+
+  transition: opacity 250ms ease-in-out;
+}
+
+.modal-btn.cancel {
+  background-color: hsl(var(--grayish-blue));
+}
+
+.modal-btn.delete {
+  background-color: hsl(var(--soft-red));
+}
+
+.modal-btn:where(:hover, :focus-visible) {
+  opacity: 0.5;
+}
+
+/* Responsiveness */
+/* Tablets */
+@media screen and (width >= 48em) {
+  .modal {
+    width: max-content;
+  }
+
+  .modal p {
+    max-width: 30ch;
+  }
+}

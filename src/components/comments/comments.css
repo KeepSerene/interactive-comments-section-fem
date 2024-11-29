@@ -1,0 +1,9 @@
+.comments {
+  flex: 1;
+
+  padding-right: 0.5rem; /* For potential scroll-bar appearing on the right */
+  overflow-y: auto;
+
+  display: grid;
+  gap: 1rem;
+}
