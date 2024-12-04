@@ -9,7 +9,7 @@ import { useCommentsContext } from "../CommentsProvider";
 // Component imports
 import CommentCard from "../commentCard/CommentCard";
 
-function Comments({ setIsModalOpen }) {
+function Comments({ setIsModalOpen, setCommentToDeleteId }) {
   const { comments } = useCommentsContext();
 
   return (
@@ -22,6 +22,7 @@ function Comments({ setIsModalOpen }) {
           comment={comment}
           currentUser={data.currentUser}
           setIsModalOpen={setIsModalOpen}
+          setCommentToDeleteId={setCommentToDeleteId}
         />
       ))}
     </article>

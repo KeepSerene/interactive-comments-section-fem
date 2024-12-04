@@ -9,6 +9,9 @@ import data from "../../../data/data.json";
 // Context imports
 import { useCommentsContext } from "../CommentsProvider";
 
+// Library imports
+import { toast } from "react-toastify";
+
 function AddCommentForm() {
   const [currentUserComment, setCurrentUserComment] = useState({
     user: data.currentUser,
@@ -19,8 +22,15 @@ function AddCommentForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addComment(currentUserComment);
-    setCurrentUserComment({ ...currentUserComment, content: "" });
+
+    try {
+      addComment(currentUserComment);
+      toast.success("Comment added successfully!");
+      setCurrentUserComment({ ...currentUserComment, content: "" });
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while adding the comment:", error.message);
+    }
   };
 
   const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px

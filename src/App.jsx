@@ -1,29 +1,13 @@
-import "./App.css";
-
-// React imports
-import { useState } from "react";
-
-// Context provider import
+// Context imports
 import { CommentsProvider } from "./components/CommentsProvider";
 
 // Component imports
-import AddCommentForm from "./components/addCommentForm/AddCommentForm";
-import Comments from "./components/comments/Comments";
-import Modal from "./components/modal/Modal";
+import AppContent from "./components/appContent/AppContent";
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <CommentsProvider>
-      <div className="app">
-        <main className="wrapper">
-          <Comments setIsModalOpen={setIsModalOpen} />
-          <AddCommentForm />
-        </main>
-
-        {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
-      </div>
+      <AppContent />
     </CommentsProvider>
   );
 }

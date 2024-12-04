@@ -1,14 +1,15 @@
 import "./modal.css";
 
-function Modal({ setIsModalOpen }) {
+function Modal({ setIsModalOpen, handleDelete }) {
   const handleClick = (event) => {
     event.stopPropagation();
     setIsModalOpen(false);
   };
 
-  const handleDelete = (event) => {
-    event.stopPropagation();
-    console.log("Delete");
+  const onDelete = (event) => {
+    event.preventDefault();
+    handleDelete();
+    setIsModalOpen(false);
   };
 
   return (
@@ -30,11 +31,7 @@ function Modal({ setIsModalOpen }) {
             No, cancel
           </button>
 
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="modal-btn delete"
-          >
+          <button type="button" onClick={onDelete} className="modal-btn delete">
             Yes, delete
           </button>
         </div>

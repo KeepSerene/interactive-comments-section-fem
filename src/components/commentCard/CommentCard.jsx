@@ -3,9 +3,26 @@ import "./commentCard.css";
 // Helper function imports
 import { getElapsedTimeStr } from "../../utils/getElapsedTimeStr";
 
-function CommentCard({ comment, currentUser, setIsModalOpen }) {
+// React imports
+import { useState } from "react";
+
+// Component imports
+import EditCommentForm from "../editCommentForm/EditCommentForm";
+
+function CommentCard({
+  comment,
+  currentUser,
+  setIsModalOpen,
+  setCommentToDeleteId,
+}) {
   const timestamp = getElapsedTimeStr(comment.createdAt);
+  const [isInEditMode, setIsInEditMode] = useState(false);
   const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px
+
+  const onDelete = () => {
+    setIsModalOpen(true);
+    setCommentToDeleteId(comment.id);
+  };
 
   return (
     <div className="card-container">
@@ -63,7 +80,7 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
               <div className="current-user-actions large-scr-elem">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={onDelete}
                   className="delete-btn btn"
                 >
                   <svg
@@ -78,7 +95,11 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
                   <span>Delete</span>
                 </button>
 
-                <button type="button" className="btn">
+                <button
+                  type="button"
+                  onClick={() => setIsInEditMode(true)}
+                  className="btn"
+                >
                   <svg
                     width="14"
                     height="14"
@@ -107,7 +128,14 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
             )}
           </section>
 
-          <p className="card-content">{comment.content}</p>
+          {isInEditMode ? (
+            <EditCommentForm
+              comment={comment}
+              setIsInEditMode={setIsInEditMode}
+            />
+          ) : (
+            <p className="card-content">{comment.content}</p>
+          )}
         </div>
 
         {isOnSmallScr && (
@@ -150,7 +178,7 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
               <div className="current-user-actions">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={onDelete}
                   className="delete-btn btn"
                 >
                   <svg
@@ -165,7 +193,11 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
                   <span>Delete</span>
                 </button>
 
-                <button type="button" className="btn">
+                <button
+                  type="button"
+                  onClick={() => setIsInEditMode(true)}
+                  className="btn"
+                >
                   <svg
                     width="14"
                     height="14"

@@ -1,5 +1,6 @@
 export function getElapsedTimeStr(initialTimeInMS) {
-  if (!Number(initialTimeInMS)) return initialTimeInMS;
+  // For preloaded comments
+  if (!Number(initialTimeInMS)) return initialTimeInMS.toString();
 
   const currentTimeInMS = Date.now();
   const elapsedTimeInMS = currentTimeInMS - initialTimeInMS;
