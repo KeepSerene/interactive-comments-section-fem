@@ -1,6 +1,10 @@
 import "./commentCard.css";
 
+// Helper function imports
+import { getElapsedTimeStr } from "../../utils/getElapsedTimeStr";
+
 function CommentCard({ comment, currentUser, setIsModalOpen }) {
+  const timestamp = getElapsedTimeStr(comment.createdAt);
   const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px
 
   return (
@@ -37,7 +41,7 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
           </button>
         </div>
 
-        <div>
+        <div className="card-info">
           <section className="card-header">
             <div className="user-info">
               <img
@@ -52,7 +56,7 @@ function CommentCard({ comment, currentUser, setIsModalOpen }) {
                 <p className="you-tag">you</p>
               )}
 
-              <p className="timestamp">{comment.createdAt}</p>
+              <p className="timestamp">{timestamp}</p>
             </div>
 
             {comment.user.username === currentUser.username ? (

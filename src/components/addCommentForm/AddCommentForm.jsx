@@ -3,15 +3,24 @@ import "./addCommentForm.css";
 // React imports
 import { useState } from "react";
 
+// Data import
+import data from "../../../data/data.json";
+
+// Context imports
+import { useCommentsContext } from "../CommentsProvider";
+
 function AddCommentForm() {
-  const [currentUserComment, setCurrentUserComment] = useState("");
+  const [currentUserComment, setCurrentUserComment] = useState({
+    user: data.currentUser,
+    content: "",
+  });
+
+  const { addComment } = useCommentsContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    console.log(currentUserComment.trim());
-
-    setCurrentUserComment("");
+    addComment(currentUserComment);
+    setCurrentUserComment({ ...currentUserComment, content: "" });
   };
 
   const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px
@@ -32,8 +41,13 @@ function AddCommentForm() {
 
         <textarea
           id="current-user-comment-field"
-          value={currentUserComment}
-          onChange={(event) => setCurrentUserComment(event.target.value)}
+          value={currentUserComment.content}
+          onChange={(event) =>
+            setCurrentUserComment({
+              ...currentUserComment,
+              content: event.target.value,
+            })
+          }
           required
           rows={3}
           placeholder="Add a comment..."
@@ -41,7 +55,7 @@ function AddCommentForm() {
 
         <button
           type="submit"
-          disabled={!currentUserComment.trim()}
+          disabled={!currentUserComment.content.trim()}
           className="send-btn hide-on-small-scr"
         >
           Send
@@ -58,7 +72,7 @@ function AddCommentForm() {
 
           <button
             type="button"
-            disabled={!currentUserComment.trim()}
+            disabled={!currentUserComment.content.trim()}
             onClick={handleSubmit}
             className="send-btn"
           >

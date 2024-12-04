@@ -48,6 +48,10 @@
   font-weight: var(--fw-bold);
 }
 
+.card-info {
+  flex-basis: 100%;
+}
+
 .card-header {
   margin-bottom: 1rem;
 

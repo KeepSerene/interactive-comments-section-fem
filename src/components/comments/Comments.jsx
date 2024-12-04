@@ -1,16 +1,16 @@
 import "./comments.css";
 
-// React imports
-import { useState } from "react";
-
 // Data import
 import data from "../../../data/data.json";
+
+// Context imports
+import { useCommentsContext } from "../CommentsProvider";
 
 // Component imports
 import CommentCard from "../commentCard/CommentCard";
 
 function Comments({ setIsModalOpen }) {
-  const [comments, setComments] = useState(data.comments);
+  const { comments } = useCommentsContext();
 
   return (
     <article className="comments">

@@ -1,14 +1,19 @@
 import "./modal.css";
 
 function Modal({ setIsModalOpen }) {
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setIsModalOpen(false);
+  };
+
   const handleDelete = (event) => {
     event.stopPropagation();
     console.log("Delete");
   };
 
   return (
-    <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-      <section className="modal">
+    <div className="modal-overlay" onClick={handleClick}>
+      <section className="modal" onClick={(event) => event.stopPropagation()}>
         <h3>Delete comment</h3>
 
         <p>
@@ -19,10 +24,7 @@ function Modal({ setIsModalOpen }) {
         <div className="modal-actions">
           <button
             type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              setIsModalOpen(false);
-            }}
+            onClick={handleClick}
             className="modal-btn cancel"
           >
             No, cancel

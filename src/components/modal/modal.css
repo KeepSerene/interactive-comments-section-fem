@@ -1,5 +1,5 @@
 .modal-overlay {
-  background-color: hsl(var(--grayish-blue) / 0.6);
+  background-color: hsla(var(--grayish-blue) / 0.6);
 
   position: absolute;
   inset: 0;
@@ -60,7 +60,7 @@
 }
 
 /* Responsiveness */
-/* Tablets */
+/* Tablets >= 768px */
 @media screen and (width >= 48em) {
   .modal {
     width: max-content;

@@ -1,5 +1,10 @@
-import { useState } from "react";
 import "./App.css";
+
+// React imports
+import { useState } from "react";
+
+// Context provider import
+import { CommentsProvider } from "./components/CommentsProvider";
 
 // Component imports
 import AddCommentForm from "./components/addCommentForm/AddCommentForm";
@@ -10,14 +15,16 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="app">
-      <main className="wrapper">
-        <Comments setIsModalOpen={setIsModalOpen} />
-        <AddCommentForm />
-      </main>
+    <CommentsProvider>
+      <div className="app">
+        <main className="wrapper">
+          <Comments setIsModalOpen={setIsModalOpen} />
+          <AddCommentForm />
+        </main>
 
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
-    </div>
+        {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
+      </div>
+    </CommentsProvider>
   );
 }
 
