@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 function EditReplyForm({ reply, setIsInEditMode, parentCommentId }) {
   const [updatedReplyContent, setUpdatedReplyContent] = useState(reply.content);
   const { updateReplyContent } = useCommentsContext();
-  const textareaRef = useRef();
+  const textareaRef = useRef(null);
 
   useEffect(() => {
     if (textareaRef.current) {

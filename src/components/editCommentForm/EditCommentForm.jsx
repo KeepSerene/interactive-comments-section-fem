@@ -17,7 +17,7 @@ function EditCommentForm({
   parentCommentId,
 }) {
   const [updatedContent, setUpdatedContent] = useState(comment.content);
-  const textareaRef = useRef();
+  const textareaRef = useRef(null);
 
   useEffect(() => {
     if (textareaRef.current) {
