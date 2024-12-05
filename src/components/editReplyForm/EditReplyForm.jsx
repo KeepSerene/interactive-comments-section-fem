@@ -1,7 +1,7 @@
 import "./editReplyForm.css";
 
 // React imports
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Context import
 import { useCommentsContext } from "../CommentsProvider";
@@ -11,8 +11,14 @@ import { toast } from "react-toastify";
 
 function EditReplyForm({ reply, setIsInEditMode, parentCommentId }) {
   const [updatedReplyContent, setUpdatedReplyContent] = useState(reply.content);
-
   const { updateReplyContent } = useCommentsContext();
+  const textareaRef = useRef();
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
 
   const handleUpdate = (event) => {
     event.preventDefault();
@@ -35,6 +41,7 @@ function EditReplyForm({ reply, setIsInEditMode, parentCommentId }) {
 
       <textarea
         id="edit-reply-field"
+        ref={textareaRef}
         value={updatedReplyContent}
         onChange={(event) => setUpdatedReplyContent(event.target.value)}
         required

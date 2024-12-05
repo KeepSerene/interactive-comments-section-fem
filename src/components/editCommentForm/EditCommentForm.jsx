@@ -1,7 +1,7 @@
 import "./editCommentForm.css";
 
 // React imports
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Context import
 import { useCommentsContext } from "../CommentsProvider";
@@ -17,6 +17,13 @@ function EditCommentForm({
   parentCommentId,
 }) {
   const [updatedContent, setUpdatedContent] = useState(comment.content);
+  const textareaRef = useRef();
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
 
   if (isReplyCard) {
     return (
@@ -54,6 +61,7 @@ function EditCommentForm({
 
       <textarea
         id="edit-comment-field"
+        ref={textareaRef}
         value={updatedContent}
         onChange={(event) => setUpdatedContent(event.target.value)}
         required
