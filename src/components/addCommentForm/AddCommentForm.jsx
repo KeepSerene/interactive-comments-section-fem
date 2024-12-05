@@ -17,8 +17,8 @@ function AddCommentForm() {
     user: data.currentUser,
     content: "",
   });
-
   const { addComment } = useCommentsContext();
+  const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,8 +32,6 @@ function AddCommentForm() {
       toast.error("An error occurred while adding the comment:", error.message);
     }
   };
-
-  const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px
 
   return (
     <div className="add-comment-card">

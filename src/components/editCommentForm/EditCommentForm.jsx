@@ -8,17 +8,33 @@ import { useCommentsContext } from "../CommentsProvider";
 
 // Library imports
 import { toast } from "react-toastify";
+import EditReplyForm from "../editReplyForm/EditReplyForm";
 
-function EditCommentForm({ comment, setIsInEditMode }) {
+function EditCommentForm({
+  comment,
+  setIsInEditMode,
+  isReplyCard,
+  parentCommentId,
+}) {
   const [updatedContent, setUpdatedContent] = useState(comment.content);
 
-  const { updateComment } = useCommentsContext();
+  if (isReplyCard) {
+    return (
+      <EditReplyForm
+        reply={comment}
+        setIsInEditMode={setIsInEditMode}
+        parentCommentId={parentCommentId}
+      />
+    );
+  }
+
+  const { updateCommentContent } = useCommentsContext();
 
   const handleUpdate = (event) => {
     event.preventDefault();
 
     try {
-      updateComment(comment.id, updatedContent.trim());
+      updateCommentContent(comment.id, updatedContent.trim());
       setIsInEditMode(false);
       toast.success("Comment edited successfully!");
     } catch (error) {

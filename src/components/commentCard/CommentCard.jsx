@@ -1,5 +1,8 @@
 import "./commentCard.css";
 
+// Context import
+import { useCommentsContext } from "../CommentsProvider";
+
 // Helper function imports
 import { getElapsedTimeStr } from "../../utils/getElapsedTimeStr";
 
@@ -8,20 +11,42 @@ import { useState } from "react";
 
 // Component imports
 import EditCommentForm from "../editCommentForm/EditCommentForm";
+import ReplyForm from "../replyForm/ReplyForm";
 
 function CommentCard({
   comment,
   currentUser,
   setIsModalOpen,
   setCommentToDeleteId,
+  isReplyCard = false,
+  parentCommentId, // Prop to pass parent comment ID for reply score updates (passed during the recursive call)
+  // Passed from AppContent.jsx:
+  setReplyToDeleteId = () => {},
+  setParentCommentId = () => {},
 }) {
+  const { updateCommentScore, updateReplyScore } = useCommentsContext();
   const timestamp = getElapsedTimeStr(comment.createdAt);
   const [isInEditMode, setIsInEditMode] = useState(false);
+  const [isInReplyMode, setIsInReplyMode] = useState(false);
   const isOnSmallScr = window.matchMedia("(width < 768px)").matches; // Small screens < 768px
+
+  const handleUpdateScore = (newScore) => {
+    if (isReplyCard) {
+      updateReplyScore(parentCommentId, comment.id, newScore);
+    } else {
+      updateCommentScore(comment.id, newScore);
+    }
+  };
 
   const onDelete = () => {
     setIsModalOpen(true);
-    setCommentToDeleteId(comment.id);
+
+    if (isReplyCard) {
+      setParentCommentId(parentCommentId);
+      setReplyToDeleteId(comment.id);
+    } else {
+      setCommentToDeleteId(comment.id);
+    }
   };
 
   return (
@@ -29,7 +54,12 @@ function CommentCard({
       {/* Comments */}
       <div className="comment-card">
         <div className="score-controller large-scr-elem">
-          <button type="button" aria-label="Upvote the comment" title="Upvote">
+          <button
+            type="button"
+            onClick={() => handleUpdateScore(comment.score + 1)}
+            aria-label="Upvote the comment"
+            title="Upvote"
+          >
             <svg
               width="11"
               height="11"
@@ -44,6 +74,7 @@ function CommentCard({
 
           <button
             type="button"
+            onClick={() => handleUpdateScore(comment.score - 1)}
             aria-label="Downvote the comment"
             title="Downvote"
           >
@@ -113,18 +144,24 @@ function CommentCard({
                 </button>
               </div>
             ) : (
-              <button type="button" className="btn large-scr-elem">
-                <svg
-                  width="14"
-                  height="13"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="reply-icon"
+              !isReplyCard && (
+                <button
+                  type="button"
+                  onClick={() => setIsInReplyMode(!isInReplyMode)}
+                  className="btn large-scr-elem"
                 >
-                  <path d="M.227 4.316 5.04.16a.657.657 0 0 1 1.085.497v2.189c4.392.05 7.875.93 7.875 5.093 0 1.68-1.082 3.344-2.279 4.214-.373.272-.905-.07-.767-.51 1.24-3.964-.588-5.017-4.829-5.078v2.404c0 .566-.664.86-1.085.496L.227 5.31a.657.657 0 0 1 0-.993Z" />
-                </svg>
+                  <svg
+                    width="14"
+                    height="13"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="reply-icon"
+                  >
+                    <path d="M.227 4.316 5.04.16a.657.657 0 0 1 1.085.497v2.189c4.392.05 7.875.93 7.875 5.093 0 1.68-1.082 3.344-2.279 4.214-.373.272-.905-.07-.767-.51 1.24-3.964-.588-5.017-4.829-5.078v2.404c0 .566-.664.86-1.085.496L.227 5.31a.657.657 0 0 1 0-.993Z" />
+                  </svg>
 
-                <span>Reply</span>
-              </button>
+                  <span>Reply</span>
+                </button>
+              )
             )}
           </section>
 
@@ -132,6 +169,8 @@ function CommentCard({
             <EditCommentForm
               comment={comment}
               setIsInEditMode={setIsInEditMode}
+              isReplyCard={isReplyCard}
+              parentCommentId={parentCommentId}
             />
           ) : (
             <p className="card-content">{comment.content}</p>
@@ -143,6 +182,7 @@ function CommentCard({
             <div className="score-controller">
               <button
                 type="button"
+                onClick={() => handleUpdateScore(comment.score + 1)}
                 aria-label="Upvote the comment"
                 title="Upvote"
               >
@@ -160,6 +200,7 @@ function CommentCard({
 
               <button
                 type="button"
+                onClick={() => handleUpdateScore(comment.score - 1)}
                 aria-label="Downvote the comment"
                 title="Downvote"
               >
@@ -211,7 +252,11 @@ function CommentCard({
                 </button>
               </div>
             ) : (
-              <button type="button" className="btn">
+              <button
+                type="button"
+                onClick={() => setIsInReplyMode(!isInReplyMode)}
+                className="btn"
+              >
                 <svg
                   width="14"
                   height="13"
@@ -228,6 +273,15 @@ function CommentCard({
         )}
       </div>
 
+      {/* Reply form */}
+      {isInReplyMode && (
+        <ReplyForm
+          parentCommentId={comment.id}
+          replyingTo={comment.user.username}
+          setIsInReplyMode={setIsInReplyMode}
+        />
+      )}
+
       {/* Replies */}
       {comment.replies?.length > 0 && (
         <div className="replies">
@@ -237,6 +291,11 @@ function CommentCard({
               comment={reply}
               currentUser={currentUser}
               setIsModalOpen={setIsModalOpen}
+              setCommentToDeleteId={setCommentToDeleteId}
+              isReplyCard={true}
+              parentCommentId={comment.id}
+              setParentCommentId={setParentCommentId}
+              setReplyToDeleteId={setReplyToDeleteId}
             />
           ))}
         </div>

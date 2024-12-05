@@ -17,7 +17,9 @@ import Modal from "../modal/Modal";
 
 function AppContent() {
   const [commentToDeleteId, setCommentToDeleteId] = useState(null);
-  const { deleteComment } = useCommentsContext();
+  const [parentCommentId, setParentCommentId] = useState(null);
+  const [replyToDeleteId, setReplyToDeleteId] = useState(null);
+  const { deleteComment, deleteReply } = useCommentsContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDeleteComment = () => {
@@ -35,21 +37,44 @@ function AppContent() {
     }
   };
 
+  const handleDeleteReply = () => {
+    if (parentCommentId && replyToDeleteId) {
+      try {
+        toast.success("Reply deleted successfully!");
+        deleteReply(parentCommentId, replyToDeleteId);
+      } catch (error) {
+        toast.error(
+          "An error occurred while deleting the reply:",
+          error.message
+        );
+      }
+    }
+  };
+
+  const handleDelete = () => {
+    if (commentToDeleteId) {
+      handleDeleteComment();
+    } else if (parentCommentId && replyToDeleteId) {
+      handleDeleteReply();
+    }
+
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="app">
       <main className="wrapper">
         <Comments
           setIsModalOpen={setIsModalOpen}
           setCommentToDeleteId={setCommentToDeleteId}
+          setParentCommentId={setParentCommentId}
+          setReplyToDeleteId={setReplyToDeleteId}
         />
         <AddCommentForm />
       </main>
 
       {isModalOpen && (
-        <Modal
-          setIsModalOpen={setIsModalOpen}
-          handleDelete={handleDeleteComment}
-        />
+        <Modal setIsModalOpen={setIsModalOpen} handleDelete={handleDelete} />
       )}
 
       <ToastContainer
