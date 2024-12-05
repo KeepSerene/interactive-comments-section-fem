@@ -36,7 +36,7 @@ function EditReplyForm({ reply, setIsInEditMode, parentCommentId }) {
   return (
     <form className="edit-reply-form" onSubmit={handleUpdate}>
       <label htmlFor="edit-reply-field" className="sr-only">
-        Edit your comment
+        Edit your reply
       </label>
 
       <textarea
