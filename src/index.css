@@ -95,7 +95,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: hsla(var(--light-grayish-blue));
+  background-color: hsl(var(--light-grayish-blue));
 }
 
 ::-webkit-scrollbar-thumb {
