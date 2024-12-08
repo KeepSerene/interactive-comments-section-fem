@@ -19,7 +19,7 @@ function Comments({
 
   return (
     <article className="comments">
-      <h2 className="sr-only">Comments</h2>
+      <h1 className="sr-only">Comments</h1>
 
       {comments.map((comment) => (
         <CommentCard
